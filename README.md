@@ -156,7 +156,7 @@
     }
 
     async function limparPlanilha() {
-      const url = "[(https://script.google.com/macros/s/1TOjGLMqlH1OfSenoLJs6CRQrgz-usZm20A6FnKra_cg/exec)]?action=limpar";
+      const url = "[(https://script.google.com/macros/s/AKfycbyq5WFzQjYlIurOPhum_W1I-yrqJGZDwuPsCjze4LKnPaIWrMc1IfLFOVdUbpqVsDf4vg/exec)]?action=limpar";
       try {
         const response = await fetch(url, { method: "GET" });
         const texto = await response.text();
