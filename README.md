@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tabela Guilda SilverSwordBR</title>
+  <style>
+    body { 
+      font-family: Arial, sans-serif; 
+      margin: 20px; 
+      background: #f5f5f5; 
+    }
+    .guild-header {
+      background: #2c3e50;
+      color: white;
+      text-align: center;
+      padding: 18px;
+      font-size: 26px;
+      font-weight: bold;
+      border-radius: 8px 8px 0 0;
+    }
+    table {
+      width: 100%;
+      max-width: 900px;
+      margin: 20px auto;
+      border-collapse: collapse;
+      background: white;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: center;
+      vertical-align: middle;
+    }
+    th { 
+      background: #ecf0f1; 
+      font-weight: bold;
+    }
+    tr:nth-child(even) {
+      background-color: #f8f9fa;
+    }
+    input[type="text"], select {
+      width: 95%;
+      padding: 8px;
+      box-sizing: border-box;
+      font-size: 15px;
+    }
+    .buttons { 
+      text-align: center; 
+      margin: 30px 0; 
+    }
+    button {
+      padding: 14px 28px;
+      margin: 0 12px;
+      font-size: 17px;
+      cursor: pointer;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      transition: 0.3s;
+    }
+    button:first-child { background: #3498db; }
+    button:last-child  { background: #27ae60; }
+    button:hover { 
+      opacity: 0.9; 
+      transform: scale(1.05); 
+    }
+  </style>
+</head>
+<body>
+
+  <div class="guild-header">SilverSwordBR - Escala de Raids</div>
+
+  <table id="guildTable">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Nome do Player</th>
+        <th>Classe</th>
+        <th>Sábado</th>
+        <th>Domingo</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <div class="buttons">
+    <button onclick="addPlayer()">➕ Adicionar Player</button>
+    <button onclick="salvarNoSheets()">💾 Salvar na Planilha</button>
+  </div>
+
+  <script>
+    let contador = 0;
+
+    function addPlayer() {
+      contador++;
+      const tbody = document.querySelector("#guildTable tbody");
+      const row = tbody.insertRow();
+
+      row.innerHTML = `
+        <td>${contador}</td>
+        <td><input type="text" id="nome${contador}" placeholder="Nome do player"></td>
+        <td>
+          <select id="classe${contador}">
+            <option value="Tanker">Tanker</option>
+            <option value="Healer">Healer</option>
+            <option value="DPS">DPS</option>
+          </select>
+        </td>
+        <td><input type="checkbox" id="sabado${contador}"></td>
+        <td><input type="checkbox" id="domingo${contador}"></td>
+      `;
+    }
+
+    async function salvarNoSheets() {
+      const url = "https://script.google.com/macros/s/AKfycby6NfJuRoAN2B7RbLh0O0snTqqIAgCyCAFnSbUHIHxylSqIGlZx1Z6emIUpgATzm7ukaQ/exec";
+      const rows = document.querySelectorAll("#guildTable tbody tr");
+
+      if (rows.length === 0) {
+        alert("Nenhum jogador adicionado ainda!");
+        return;
+      }
+
+      const jogadores = [];
+      for (let i = 0; i < rows.length; i++) {
+        const num = i + 1;
+        const nomeEl    = document.getElementById(`nome${num}`);
+        const classeEl  = document.getElementById(`classe${num}`);
+        const sabadoEl  = document.getElementById(`sabado${num}`);
+        const domingoEl = document.getElementById(`domingo${num}`);
+
+        if (!nomeEl || !nomeEl.value.trim()) continue;
+
+        jogadores.push({
+          numero: num,
+          nome: nomeEl.value.trim(),
+          classe: classeEl.value,
+          sabado: sabadoEl.checked ? "Sim" : "Não",
+          domingo: domingoEl.checked ? "Sim" : "Não"
+        });
+      }
+
+      try {
+        const response = await fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(jogadores)
+        });
+        const texto = await response.text();
+        alert("🎉 Pronto!\n\n" + texto);
+      } catch (err) {
+        alert("❌ Erro ao salvar: " + err);
+      }
+    }
+  </script>
+</body>
+</html>
