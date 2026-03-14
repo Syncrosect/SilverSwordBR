@@ -114,7 +114,7 @@
     }
 
     async function salvarNoSheets() {
-      const url = "https://script.google.com/macros/s/AKfycbyDu2Cc-Zbe7CxddxEnYHBVrepz2AGfP9_bMxYv7dL-85zFs4UYxasLQNPrigh8wgnvMQ/exec";
+      const url = "https://script.google.com/macros/s/AKfycby6NfJuRoAN2B7RbLh0O0snTqqIAgCyCAFnSbUHIHxylSqIGlZx1Z6emIUpgATzm7ukaQ/exec";
       const rows = document.querySelectorAll("#guildTable tbody tr");
 
       if (rows.length === 0) {
