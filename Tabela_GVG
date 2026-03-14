@@ -61,7 +61,8 @@
       transition: 0.3s;
     }
     button:first-child { background: #3498db; }
-    button:last-child  { background: #27ae60; }
+    button:nth-child(2) { background: #27ae60; }
+    button:last-child  { background: #e74c3c; }
     button:hover { 
       opacity: 0.9; 
       transform: scale(1.05); 
@@ -88,6 +89,7 @@
   <div class="buttons">
     <button onclick="addPlayer()">➕ Adicionar Player</button>
     <button onclick="salvarNoSheets()">💾 Salvar na Planilha</button>
+    <button onclick="limparPlanilha()">🧹 Limpar Planilha</button>
   </div>
 
   <script>
@@ -114,7 +116,7 @@
     }
 
     async function salvarNoSheets() {
-      const url = "https://script.google.com/macros/s/AKfycby6NfJuRoAN2B7RbLh0O0snTqqIAgCyCAFnSbUHIHxylSqIGlZx1Z6emIUpgATzm7ukaQ/exec";
+      const url = "https://script.google.com/macros/s/SEU_ID_DO_WEBAPP/exec";
       const rows = document.querySelectorAll("#guildTable tbody tr");
 
       if (rows.length === 0) {
@@ -151,6 +153,17 @@
         alert("🎉 Pronto!\n\n" + texto);
       } catch (err) {
         alert("❌ Erro ao salvar: " + err);
+      }
+    }
+
+    async function limparPlanilha() {
+      const url = "https://script.google.com/macros/s/SEU_ID_DO_WEBAPP/exec?action=limpar";
+      try {
+        const response = await fetch(url, { method: "GET" });
+        const texto = await response.text();
+        alert("🧹 " + texto);
+      } catch (err) {
+        alert("❌ Erro ao limpar: " + err);
       }
     }
   </script>
