@@ -116,7 +116,6 @@
     }
 
     async function salvarNoSheets() {
-      const url = "https://script.google.com/macros/s/SEU_ID_DO_WEBAPP/exec";
       const rows = document.querySelectorAll("#guildTable tbody tr");
 
       if (rows.length === 0) {
@@ -157,7 +156,7 @@
     }
 
     async function limparPlanilha() {
-      const url = "https://script.google.com/macros/s/SEU_ID_DO_WEBAPP/exec?action=limpar";
+      const url = "[(https://script.google.com/macros/s/AKfycbyq5WFzQjYlIurOPhum_W1I-yrqJGZDwuPsCjze4LKnPaIWrMc1IfLFOVdUbpqVsDf4vg/exec)]?action=limpar";
       try {
         const response = await fetch(url, { method: "GET" });
         const texto = await response.text();
